@@ -3,14 +3,10 @@ class UsersController < ApplicationController
   before_action :find_user, except: %i[create index]
 
   def index
-    @users = User.all 
-    render json: @users.map{ |user| 
-      if user.avatar.attached? 
-        user.as_json.merge(avatar_path: url_for(user.avatar))
-      else 
-         user
-      end}
-  end
+  @users = User.all 
+  render json: { data: ActiveModel::Serializer::CollectionSerializer.new(@users, serializer: UserSerializer) }, status: :ok
+end
+
 
   def show
     render json: @user, serializer: UserSerializer
