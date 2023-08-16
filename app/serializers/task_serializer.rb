@@ -1,4 +1,3 @@
 class TaskSerializer < ActiveModel::Serializer
-  # byebug
-  attributes :id
+  attributes :id, :description
 end

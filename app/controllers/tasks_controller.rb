@@ -4,12 +4,8 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
-    # byebug
-    # render json: {data: @tasks}, status: :ok
-    render json: 
-       {data: @tasks.each do |task| TaskSerializer.new(task)}
-    end    
-  end
+    render json: { data: ActiveModel::Serializer::CollectionSerializer.new(@tasks, serializer: TaskSerializer) }, status: :ok
+  end  
 
   def new
     @task = Task.new
